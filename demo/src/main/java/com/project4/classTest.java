@@ -14,16 +14,21 @@ public class classTest {
         String url = "jdbc:mysql://localhost:3306/world";
         String username = "root";
         String password = "Jkjkjk94+";
-        String query = "SELECT Name FROM city WHERE ID=1";
+        String query = "SELECT * FROM world.city";
 
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
         ResultSet set = statement.executeQuery(query);
         
-        set.next();
-        String name = set.getString("Name");
-        System.out.println(name);
+        String data = "";
+        int count = 0;
+        while(set.next() && count < 15){
+            data = set.getInt(1) + " : " + set.getString(2);
+            System.out.println(data);
+            count++;
+        }
+        
 
         statement.close();
         connection.close();
