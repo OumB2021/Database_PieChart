@@ -14,7 +14,7 @@ public class classTest {
         String url = "jdbc:mysql://localhost:3306/world";
         String username = "root";
         String password = "Jkjkjk94+";
-        String query = "SELECT * FROM world.city";
+        String query = "SELECT * FROM world.country";
 
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection = DriverManager.getConnection(url, username, password);
@@ -24,7 +24,7 @@ public class classTest {
         String data = "";
         int count = 0;
         while(set.next() && count < 15){
-            data = set.getInt(1) + " : " + set.getString(2);
+            data = set.getInt(8) + " : " + set.getString(2);
             System.out.println(data);
             count++;
         }
