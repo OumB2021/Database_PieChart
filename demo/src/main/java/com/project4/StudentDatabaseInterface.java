@@ -67,6 +67,48 @@ interface StudentDatabaseInterface {
                                    "(0029, 'Student-29', 'U', NULL), " +
                                    "(0030, 'Student-30', 'F', NULL)";
     
-    String ddlInsertTableClasses = "INSERT INTO Classes VALUES "
+    String ddlInsertTableClasses = "INSERT INTO CLASSES VALUES (1, '22100 F', '32131' ,'2021', 'Spring', 'A'), " +
+                                   "(15, '22100 P', '32132', '2021', 'Spring', 'A'), " +
+                                   "(3, '22100 R', '32150', '2021', 'Spring', 'B'), " +
+                                   "(5, '22100 F', '32131', '2021', 'Spring', 'C'), " +
+                                   "(3, '22100 R', '32150', '2021', 'Spring', 'C'), " +
+                                   "(10, '22100 R', '32150', '2021', 'Spring', 'C'), " +
+                                   "(13, '22100 P', '32132', '2021', 'Spring', 'A'), " +
+                                   "(45, '22100 P', '32132', '2021', 'Spring', 'A'), " +
+                                   "(33, '22100 R', '32150', '2021', 'Spring', 'C'), " +
+                                   "(11, '22100 P', '32132', '2021', 'Spring', 'D'), ";
+    
+    String sqlAggregateGrades = "SELECT Grade, count(Grade) FROM Classes GROUP BY Grade";
 
+    // Static methods
+
+    // Updat the name of the professor for a specific class
+    static String ddlUpdateCourseInstructor (String CourseId, String sectionNumber, String profName){
+
+        return "UPDATE SCHEDULE" +
+               " SET Instructor = " + profName +
+               " WHERE CourseID = " + CourseId + " AND SectionNumber = " + sectionNumber;
+    }
+
+    // Update the name of the professor for all general cases
+    static String ddlUpdateInstructor(String nameInstructor, String nameNewInstructor){
+
+        return "UPDATE Schedule" +
+               "SET Instructor = " + nameInstructor +
+               "WHERE CourseId = " + nameNewInstructor;
+    }
+
+    static String ddlInsertTableCourses(String nameToTable, String nameFromTable){
+
+        return "INSERT INTO" + nameToTable +
+               "SELECT CourseId, Title, Department, Program" + 
+               "FROM " + nameFromTable;
+    }
+
+    static String ddlInsertTableAggregateGrades(String nameToTable, String nameFromTable){
+
+        return "INSERT INTO" + nameToTable +
+               "SELECT Grade, count(Grade) FROM " + 
+               "Group BY Grade ORDER BY Grade";
+    }
 }
