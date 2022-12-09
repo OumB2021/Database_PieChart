@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.mysql.cj.xdevapi.Result;
 
 
 public class StudentDatabase implements TableInterface, StudentDatabaseInterface{
@@ -40,6 +44,8 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
         String ddlCreateTable, ddlPopulateTable;
         String ddlUpdateCourseInstructor, ddlUpdateInstructor;
         String filename, nameTable;
+
+        ResultSet resultSet;
     
         Schedule (String ddlCreateTable, String filename, String nameTable) throws SQLException{
             
@@ -52,14 +58,14 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
             //Create the table
             TableInterface.dropTable(connection, nameTable);
             TableInterface.createTable(connection, ddlCreateTable);
-            System.out.println("\nTable created");
+            System.out.println("\nTable Schedule created");
 
             //Insert values into the table
             TableInterface.setLocalInFileLoading(connection);
             TableInterface.populateTable(connection, ddlPopulateTable);
             System.out.println("\nTable populated");
 
-            ResultSet resultSet = TableInterface.getTable(connection, nameTable);
+            this.resultSet = TableInterface.getTable(connection, nameTable);
             System.out.println("\nQuery executed on Schedule successfully");
         }
 
@@ -80,10 +86,141 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
             TableInterface.updateField(connection, ddlUpdateInstructor);
         }
 
+        public ResultSet getResultSet() throws SQLException{return this.resultSet;}
+
     }
 
-    class Courses{
+    class Courses {
+
+        String ddlCreateTable, ddlPopulateTable;
+        String nameToTable, nameFromTable;
+
+        ResultSet resultSet;
+
+        Courses(String ddlCreateTable, String nameToTable, String nameFromTable) throws SQLException{
+
+            this.ddlCreateTable = ddlCreateTable;
+            this.nameToTable = nameToTable;
+            this.nameFromTable = nameFromTable;
         
+            this.ddlPopulateTable = StudentDatabaseInterface.ddlInsertTableCourses(nameToTable, nameFromTable);
+            
+            //Create the table
+            TableInterface.dropTable(connection, nameToTable);
+            TableInterface.createTable(connection, ddlCreateTable);
+            System.out.println("\nTable Courses created");
+
+            //Insert values into the table
+            TableInterface.insertFromSelect(connection, ddlPopulateTable);
+            System.out.println("\nTable Courses populated");
+            
+            this.resultSet = TableInterface.getTable(connection, nameToTable);
+            System.out.println("\nQuery executed on Courses successfully");
+        }
+
+        public ResultSet getResultSet() throws SQLException{return this.resultSet;}
+
+    }
+
+    class Students {
+
+        String ddlCreateTable, ddlPopulateTable, nameTable;
+
+        ResultSet resultSet;
+
+        Students(String ddlCreateTable, String nameTable) throws SQLException{
+
+            this.ddlCreateTable = ddlCreateTable;
+            this.nameTable = nameTable;
+        
+            this.ddlPopulateTable = StudentDatabaseInterface.ddlInsertIntoStudents;
+
+            //Create the table
+            TableInterface.dropTable(connection, nameTable);
+            TableInterface.createTable(connection, ddlCreateTable);
+            System.out.println("\nTable Students created");
+
+            //Insert values into the table
+            TableInterface.populateTable(connection, ddlPopulateTable);
+            System.out.println("\nTable Students populated");
+            
+            this.resultSet = TableInterface.getTable(connection, nameTable);
+            System.out.println("\nQuery executed on Students successfully");
+        }
+
+        public ResultSet getResultSet() throws SQLException{return this.resultSet;}
+    }
+
+    class Classes {
+
+        String ddlCreateTable, ddlPopulateTable, nameTable;
+        ResultSet resultSet;
+
+        Classes(String ddlCreateTable, String nameTable) throws SQLException{
+
+            this.ddlCreateTable = ddlCreateTable;
+            this.nameTable = nameTable;
+
+            this.ddlPopulateTable = StudentDatabaseInterface.ddlInsertTableClasses;
+
+            //Create the table
+            TableInterface.dropTable(connection, nameTable);
+            TableInterface.createTable(connection, ddlCreateTable);
+            System.out.println("\nTable Classes created");
+            
+            //Insert values into the table
+            TableInterface.populateTable(connection, ddlPopulateTable);
+            System.out.println("\nTable Classes populated");
+            
+            this.resultSet = TableInterface.getTable(connection, nameTable);
+            System.out.println("\nQuery executed on Classes successfully");
+        }
+
+        public ResultSet getResultSet() throws SQLException{return this.resultSet;}
+    }
+
+    class AggregateGrades {
+
+        String ddlCreateTable, ddlPopulateTable, nameTable, nameFromTable;
+        ResultSet resultSet;
+
+        AggregateGrades(String ddlCreateTable, String nameTable, String nameFromTable) throws SQLException{
+
+            this.ddlCreateTable = ddlCreateTable;
+            this.nameTable = nameTable;
+            this.nameFromTable = nameFromTable;
+
+            this.ddlPopulateTable = StudentDatabaseInterface.ddlInsertTableAggregateGrades(nameTable, nameFromTable);
+
+            //Create the table
+            TableInterface.dropTable(connection, nameTable);
+            TableInterface.createTable(connection, ddlCreateTable);
+            System.out.println("\nTable Aggregate Grades created");
+
+            //Insert values into the table
+            TableInterface.insertFromSelect(connection, ddlPopulateTable);
+            System.out.println("\nTable Aggregate Grades populated");
+            
+            this.resultSet = TableInterface.getTable(connection, nameTable);
+            System.out.println("\nQuery executed on Aggregate Grades successfully");
+        }
+
+        public Map <Character, Integer> getGrades (String nameTable){
+
+            Map <Character, Integer> grades = new HashMap<Character, Integer>();
+
+            try {
+                ResultSet resultSet = TableInterface.getTable(connection, nameTable);
+                while (resultSet.next()){
+                    grades.put(resultSet.getString("grade").charAt(0),
+                    resultSet.getInt("NumberOfStudents"));
+                }
+            } catch(SQLException e){System.out.print(e);}
+
+            return grades;
+        }
+
+        public ResultSet getResultSet() throws SQLException{return this.resultSet;}
     }
 
 }
