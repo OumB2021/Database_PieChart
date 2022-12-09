@@ -21,8 +21,8 @@ interface TableInterface {
     }
 
     //Drops a table from the database
-    static void dropTable(Connection connection, String schemaName) throws SQLException{
-        PreparedStatement statement = connection.prepareStatement("DROP SCHEMA IF EXISTS " + schemaName);
+    static void dropTable(Connection connection, String nameTable) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("DROP TABLE IF EXISTS " + nameTable);
         
         try {
             statement.executeUpdate();
@@ -84,7 +84,7 @@ interface TableInterface {
             psInsertFromSelect.executeUpdate();
         }
 
-        catch(SQLException e) { System.out.println("Whassup?");}
+        catch(SQLException e) { System.out.println(e);}
 
     }
 

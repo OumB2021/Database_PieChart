@@ -33,8 +33,15 @@ public class classTest {
         tableName = "Courses";
         ddlCreateTable = StudentDatabaseInterface.ddlCreateTableCourses;
         StudentDatabase.Courses courses = DB.new Courses(ddlCreateTable, tableName, fromTable);
+
+        // Creates and insert values into the Students table
+        tableName = "Students";
+        ddlCreateTable = StudentDatabaseInterface.ddlCreateTableStudents;
+        StudentDatabase.Students student = DB.new Students(ddlCreateTable, tableName);
         
         // Creates and insert values into the Classes table
-        
+        tableName = "Classes";
+        ddlCreateTable = StudentDatabaseInterface.ddlCreateTableClasses;
+        StudentDatabase.Classes classes = DB.new Classes(ddlCreateTable, tableName);
     }
 } //end of classTest

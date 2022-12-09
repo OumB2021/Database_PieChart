@@ -14,9 +14,9 @@ interface StudentDatabaseInterface {
                                     "PRIMARY KEY (courseId, SectionNumber))";
     
     String ddlCreateTableStudents = "CREATE TABLE Students(" +
-                                    "EmplId INT PRIMARY KEY," +
-                                    "Name VARCHAR(32) NOT NULL" +
-                                    "Gender ENTER CHECK (Gender ='F' OR Gender ='M' OR Gender ='U')," +
+                                    "EmplId INT PRIMARY KEY, " +
+                                    "Name VARCHAR(20) NOT NULL, " +
+                                    "Gender CHAR(1) CHECK (Gender = 'F' OR Gender = 'M' OR Gender = 'U'), " +
                                     "Dob DATE)";
     
     String ddlCreateTableCourses =  "CREATE TABLE Courses(" +
@@ -27,11 +27,11 @@ interface StudentDatabaseInterface {
     
     String ddlCreateTableClasses =  "CREATE TABLE Classes(" +
                                     "emplId INT REFERENCES Student (EmplId), " +
-                                    "CourseId CHAR(12) REFERENCES Schedule(CourseId)," +
-                                    "SectionNumber VARCHAR(10) REFERENCES Schedule(SectionNumber)," +
-                                    "Year INT," +
-                                    "Semester CHAR(8)," +
-                                    "Grade CHAR CHECK(Grade = 'A' OR Grade = 'B' OR Grade = 'C' OR Grade = 'D' OR Grade = 'W'),"+
+                                    "CourseId CHAR(12) REFERENCES Schedule(CourseId), " +
+                                    "SectionNumber VARCHAR(10) REFERENCES Schedule(SectionNumber), " +
+                                    "Year INT, " +
+                                    "Semester CHAR(8), " +
+                                    "Grade CHAR CHECK(Grade = 'A' OR Grade = 'B' OR Grade = 'C' OR Grade = 'D' OR Grade = 'W'), "+
                                     "PRIMARY KEY(EmplId, courseId, SectionNumber))";
     
     String ddlCreateTableAggregateGrades = "CREATE TABLE AggregateGrades(Grade CHAR, NumberOfStudents INT)";
@@ -67,7 +67,7 @@ interface StudentDatabaseInterface {
                                    "(0029, 'Student-29', 'U', NULL), " +
                                    "(0030, 'Student-30', 'F', NULL)";
     
-    String ddlInsertTableClasses = "INSERT INTO CLASSES VALUES (1, '22100 F', '32131' ,'2021', 'Spring', 'A'), " +
+    String ddlInsertTableClasses = "INSERT INTO Classes VALUES (1, '22100 F', '32131' ,'2021', 'Spring', 'A'), " +
                                    "(15, '22100 P', '32132', '2021', 'Spring', 'A'), " +
                                    "(3, '22100 R', '32150', '2021', 'Spring', 'B'), " +
                                    "(5, '22100 F', '32131', '2021', 'Spring', 'C'), " +
@@ -98,6 +98,7 @@ interface StudentDatabaseInterface {
                "WHERE CourseId = " + nameNewInstructor;
     }
 
+    // Insert values into the Courses table using the data in the Schedule table.
     static String ddlInsertTableCourses(String nameToTable, String nameFromTable){
 
         return "INSERT INTO " + nameToTable +

@@ -68,6 +68,7 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
 
             this.resultSet = TableInterface.getTable(connection, nameTable);
             System.out.println("\nQuery executed on Schedule successfully");
+            System.out.println("----------------------------------------------------------------");
         }
 
 
@@ -117,6 +118,7 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
             
             this.resultSet = TableInterface.getTable(connection, nameToTable);
             System.out.println("\nQuery executed on Courses successfully");
+            System.out.println("----------------------------------------------------------------");
         }
 
         public ResultSet getResultSet() throws SQLException{return this.resultSet;}
@@ -147,6 +149,7 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
             
             this.resultSet = TableInterface.getTable(connection, nameTable);
             System.out.println("\nQuery executed on Students successfully");
+            System.out.println("----------------------------------------------------------------");
         }
 
         public ResultSet getResultSet() throws SQLException{return this.resultSet;}
@@ -175,6 +178,7 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
             
             this.resultSet = TableInterface.getTable(connection, nameTable);
             System.out.println("\nQuery executed on Classes successfully");
+            System.out.println("----------------------------------------------------------------");
         }
 
         public ResultSet getResultSet() throws SQLException{return this.resultSet;}
@@ -204,6 +208,7 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
             
             this.resultSet = TableInterface.getTable(connection, nameTable);
             System.out.println("\nQuery executed on Aggregate Grades successfully");
+            System.out.println("----------------------------------------------------------------");
         }
 
         public Map <Character, Integer> getGrades (String nameTable){
