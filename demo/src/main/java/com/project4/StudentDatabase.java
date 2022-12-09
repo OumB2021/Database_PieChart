@@ -64,7 +64,7 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
             //Insert values into the table
             TableInterface.setLocalInFileLoading(connection);
             TableInterface.populateTable(connection, ddlPopulateTable);
-            System.out.println("\nTable populated");
+            System.out.println("\nTable Schedule populated");
 
             this.resultSet = TableInterface.getTable(connection, nameTable);
             System.out.println("\nQuery executed on Schedule successfully");

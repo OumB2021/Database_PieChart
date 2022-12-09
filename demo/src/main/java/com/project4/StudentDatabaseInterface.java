@@ -100,14 +100,15 @@ interface StudentDatabaseInterface {
 
     static String ddlInsertTableCourses(String nameToTable, String nameFromTable){
 
-        return "INSERT INTO" + nameToTable +
-               "SELECT CourseId, Title, Department, Program" + 
+        return "INSERT INTO " + nameToTable +
+               " (CourseId, Title, Department, Program) " +
+               "SELECT CourseId, Title, Department, Program " + 
                "FROM " + nameFromTable;
     }
 
     static String ddlInsertTableAggregateGrades(String nameToTable, String nameFromTable){
 
-        return "INSERT INTO" + nameToTable +
+        return "INSERT INTO " + nameToTable +
                "SELECT Grade, count(Grade) FROM " + 
                "Group BY Grade ORDER BY Grade";
     }
