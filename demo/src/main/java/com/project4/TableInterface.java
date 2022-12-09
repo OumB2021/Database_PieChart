@@ -42,17 +42,96 @@ interface TableInterface {
         
         try {
             statement.executeUpdate();
+            System.out.println("\nGlobal local-infile set successfully");
         } catch (Exception e) {System.out.println(e);}
     }
 
-    static String LoadDatainFileTable(String nameFile, String nameTable){
-        return "LOAD DATA LOCAL INFILE '" + nameFile + "' INTO TABLE " + nameTable;
+    static String LoadDataInFileTable(String nameFile, String nameTable){
+
+        return "LOAD DATA LOCAL INFILE '" + nameFile + "' INTO TABLE" + nameTable + 
+               "COLUMNS TERMINATED BY '\t'" +
+               "LINES TERMINATED BY '\n" +
+               "IGNORE 1 LINE";
     }
 
     static void populateTable(Connection connection, String ddlPopulateTable) throws SQLException{
+
         PreparedStatement populateTable = connection.prepareStatement(ddlPopulateTable);
         try {
             populateTable.executeUpdate();
         } catch (Exception e) { System.out.println(e);}
+    }
+
+    //insert into Table from SELECT given specific fields and conditions
+    static void insertFromSelect(Connection connection, String nameToTable, String nameFromTable)  throws SQLException{
+
+        PreparedStatement psInsertFromSelect = connection.prepareStatement("INSERT INTO " + nameToTable + "SELECT * FROM " + nameFromTable);
+        try{
+            psInsertFromSelect.executeUpdate();
+        }
+
+        catch(SQLException e) { System.out.println(e);}
+    }
+
+    //insert into Table from SELECT given specific fields and conditions
+    static void insertFromSelect(Connection connection, String ddlInsertFromSelect)  throws SQLException{
+
+        PreparedStatement psInsertFromSelect = connection.prepareStatement(ddlInsertFromSelect);
+        try{
+            psInsertFromSelect.executeUpdate();
+        }
+
+        catch(SQLException e) { System.out.println(e);}
+
+    }
+
+     //insert a record in a Table
+     static void insertRecord(Connection connection, String ddlInsertRecord)  throws SQLException{
+
+        PreparedStatement psInsertRecord = connection.prepareStatement(ddlInsertRecord);
+        try{
+            psInsertRecord.executeUpdate();
+        }
+
+        catch(SQLException e) { System.out.println(e);}
+
+    }
+
+      //update a field in records
+      static void updateField(Connection connection, String ddlUpdateField)  throws SQLException{
+
+        PreparedStatement psUpdateField = connection.prepareStatement(ddlUpdateField);
+        try{
+            psUpdateField.executeUpdate();
+        }
+
+        catch(SQLException e) { System.out.println(e);}
+
+    }
+
+    //delete a record from Table
+    static void deleteRecord(Connection connection, String ddlDeleteRecord)  throws SQLException{
+
+        PreparedStatement psDeleteRecord = connection.prepareStatement(ddlDeleteRecord);
+        try{
+            psDeleteRecord.executeUpdate();
+        }
+
+        catch(SQLException e) { System.out.println(e);}
+
+    }
+
+    //get a table
+    static ResultSet getTable(Connection connection, String nameToTable) throws SQLException{
+
+        ResultSet RS = null;
+        PreparedStatement psGetTable = connection.prepareStatement("SELECT * FROM " + nameToTable);
+        try{
+            RS = psGetTable.executeQuery();
+        }
+
+        catch(SQLException e) { System.out.println(e);}
+
+        return RS;
     }
 }
