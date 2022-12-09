@@ -9,6 +9,7 @@ interface TableInterface {
     
     Connection getConnection(String url, String username, String password);
     
+    // Creates a new database 
     static void createSchema(Connection connection, String schemaName) throws SQLException{
         PreparedStatement statement = connection.prepareStatement("CREATE SCHEMA IF NOT EXISTS " + schemaName);
         
@@ -19,6 +20,7 @@ interface TableInterface {
         statement.close();
     }
 
+    //Drops a table from the database
     static void dropTable(Connection connection, String schemaName) throws SQLException{
         PreparedStatement statement = connection.prepareStatement("DROP SCHEMA IF EXISTS " + schemaName);
         
@@ -29,6 +31,7 @@ interface TableInterface {
         statement.close(); 
     }
     
+    //Creates a table in the database
     static void createTable(Connection connection, String ddlCreateTable) throws SQLException{
         PreparedStatement statement = connection.prepareStatement(ddlCreateTable);
         
@@ -101,7 +104,7 @@ interface TableInterface {
       static void updateField(Connection connection, String ddlUpdateField)  throws SQLException{
 
         PreparedStatement psUpdateField = connection.prepareStatement(ddlUpdateField);
-        
+
         try{
             psUpdateField.executeUpdate();
         }
@@ -125,7 +128,8 @@ interface TableInterface {
     //get a table
     static ResultSet getTable(Connection connection, String nameToTable) throws SQLException{
 
-        ResultSet RS = null;
+        ResultSet RS = null; // To store the table information
+
         PreparedStatement psGetTable = connection.prepareStatement("SELECT * FROM " + nameToTable);
         try{
             RS = psGetTable.executeQuery();
