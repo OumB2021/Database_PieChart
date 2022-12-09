@@ -101,6 +101,7 @@ interface TableInterface {
       static void updateField(Connection connection, String ddlUpdateField)  throws SQLException{
 
         PreparedStatement psUpdateField = connection.prepareStatement(ddlUpdateField);
+        
         try{
             psUpdateField.executeUpdate();
         }
