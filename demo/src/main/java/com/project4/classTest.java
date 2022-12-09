@@ -10,27 +10,28 @@ import java.sql.ResultSet;
 
 
 public class classTest {
+
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
-        String url = "jdbc:mysql://localhost:3306/world";
+        String url = "jdbc:mysql://localhost:3306/Sample?allowLoadLocalInfile=true";
         String username = "root";
         String password = "Jkjkjk94+";
-        String query = "SELECT * FROM world.country";
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection(url, username, password);
-        Statement statement = connection.createStatement();
-        ResultSet set = statement.executeQuery(query);
+        //Class.forName("com.mysql.cj.jdbc.Driver");
         
-        String data = "";
-        int count = 0;
-        while(set.next() && count < 15){
-            data = set.getInt(8) + " : " + set.getString(2);
-            System.out.println(data);
-            count++;
-        }
-        
+        StudentDatabase DB = new StudentDatabase(url, username, password);
+        //Connection connection = DB.getConnection();
 
-        statement.close();
-        connection.close();
+        String filename = "C:/Users/baarr/OneDrive/Bureau/Java/Project 4/demo/ScheduleSpring2022.txt";
+        String ddlCreateTable, tableName;
+        
+        tableName = "Sample.Schedule";
+        ddlCreateTable = StudentDatabaseInterface.ddlCreateTableSchedule;
+
+        //System.out.println(TableInterface.LoadDataInFileTable(filename, tableName));
+
+        StudentDatabase.Schedule schedule = DB.new Schedule(ddlCreateTable, filename, tableName);
+
+        ResultSet resultSet = schedule.getResultSet();
+        
     }
 } //end of classTest

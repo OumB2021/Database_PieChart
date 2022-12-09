@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.mysql.cj.xdevapi.Result;
-
 
 public class StudentDatabase implements TableInterface, StudentDatabaseInterface{
     
@@ -36,6 +34,8 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
         return connection;
     }
 
+    public Connection getConnection(){return this.connection;}
+
     //------------------------------------------------------------------------------------------------
     // Inner class Implementation
 
@@ -52,7 +52,8 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
             this.ddlCreateTable = ddlCreateTable;
             this.filename = filename;
             this.nameTable = nameTable;
-    
+            
+            //TableInterface.setLocalInFileLoading(connection);
             this.ddlPopulateTable = TableInterface.LoadDataInFileTable(filename, nameTable);
     
             //Create the table

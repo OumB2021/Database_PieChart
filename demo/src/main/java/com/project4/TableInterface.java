@@ -41,7 +41,7 @@ interface TableInterface {
     }
 
     static void setLocalInFileLoading(Connection connection) throws SQLException{
-        PreparedStatement statement = connection.prepareStatement("SET GLOBAL local_infile = 1");
+        PreparedStatement statement = connection.prepareStatement("SET GLOBAL local_infile=1");
         
         try {
             statement.executeUpdate();
@@ -51,10 +51,10 @@ interface TableInterface {
 
     static String LoadDataInFileTable(String nameFile, String nameTable){
 
-        return "LOAD DATA LOCAL INFILE '" + nameFile + "' INTO TABLE" + nameTable + 
-               "COLUMNS TERMINATED BY '\t'" +
-               "LINES TERMINATED BY '\n" +
-               "IGNORE 1 LINE";
+        return "LOAD DATA LOCAL INFILE '" + nameFile + "' INTO TABLE " + nameTable + 
+               " COLUMNS TERMINATED BY '\t'" +
+               " LINES TERMINATED BY '\n'" +
+               " IGNORE 1 LINES";
     }
 
     static void populateTable(Connection connection, String ddlPopulateTable) throws SQLException{

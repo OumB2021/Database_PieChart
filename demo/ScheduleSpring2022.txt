@@ -1,7 +1,6 @@
 Course Id	Section No.	Title	Year	Semester	Instructor	Department	Program
 10000 PP	34143	Introduction to Programming & Computer Science	2021	Spring	Anna Towne	Computer Science	Undergraduate
 10200 CC1	32118	Introduction to Computing	2021	Spring	Jun Wu	Computer Science	Undergraduate
-10200 CC2	32119	Introduction to Computing	2021	Spring	Jun Wu	Computer Science	Undergraduate
 10200 CC3	32139	Introduction to Computing	2021	Spring	Jun Wu	Computer Science	Undergraduate
 10200 MM1	32140	Introduction to Computing	2021	Spring	Denis Khryashchev	Computer Science	Undergraduate
 10200 MM2	32141	Introduction to Computing	2021	Spring	Denis Khryashchev	Computer Science	Undergraduate
