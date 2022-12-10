@@ -42,6 +42,20 @@ public class classTest {
         // Creates and insert values into the Classes table
         tableName = "Classes";
         ddlCreateTable = StudentDatabaseInterface.ddlCreateTableClasses;
+
         StudentDatabase.Classes classes = DB.new Classes(ddlCreateTable, tableName);
+
+        // String ddlpopulate = StudentDatabaseInterface.ddlInsertTableClasses(tableName);
+        // System.out.println(ddlpopulate);
     }
+
+    // public Character getGrade(){
+        
+    //     Character [] grades = {'A', 'B', 'C', 'D', 'W'};
+
+    //     Random rand = new Random();
+    //     int randomNumber = rand.nextInt(grades.length - 1);
+
+    //     return grades[randomNumber];
+    // }
 } //end of classTest

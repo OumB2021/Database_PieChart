@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.Format;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 public class StudentDatabase implements TableInterface, StudentDatabaseInterface{
@@ -165,7 +167,7 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
             this.ddlCreateTable = ddlCreateTable;
             this.nameTable = nameTable;
 
-            this.ddlPopulateTable = StudentDatabaseInterface.ddlInsertTableClasses;
+            this.ddlPopulateTable = StudentDatabaseInterface.ddlInsertTableClasses(nameTable);
 
             //Create the table
             TableInterface.dropTable(connection, nameTable);
@@ -174,11 +176,31 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
             
             //Insert values into the table
             TableInterface.populateTable(connection, ddlPopulateTable);
-            System.out.println("\nTable Classes populated");
+            
+            // Get the grades in the table
+            for (int i = 1; i <= 30; i++){
+                ddlPopulateTable = "UPDATE " + nameTable +
+                                   " set Grade = '" + getGrade() + "' WHERE EmplId = " + Integer.toString(i);
+                
+                TableInterface.updateField(connection, ddlPopulateTable);
+            }
+
+            System.out.println("\nTable classes populated");
             
             this.resultSet = TableInterface.getTable(connection, nameTable);
             System.out.println("\nQuery executed on Classes successfully");
             System.out.println("----------------------------------------------------------------");
+        }
+
+        // Random generate the 
+        public Character getGrade(){
+        
+            Character [] grades = {'A', 'B', 'C', 'D', 'W'};
+    
+            Random rand = new Random();
+            int randomNumber = rand.nextInt(grades.length - 1);
+    
+            return grades[randomNumber];
         }
 
         public ResultSet getResultSet() throws SQLException{return this.resultSet;}

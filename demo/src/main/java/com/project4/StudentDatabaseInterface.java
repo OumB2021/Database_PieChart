@@ -26,12 +26,12 @@ interface StudentDatabaseInterface {
                                     "Program VARCHAR(48))";
     
     String ddlCreateTableClasses =  "CREATE TABLE Classes(" +
-                                    "emplId INT REFERENCES Student (EmplId), " +
-                                    "CourseId CHAR(12) REFERENCES Schedule(CourseId), " +
-                                    "SectionNumber VARCHAR(10) REFERENCES Schedule(SectionNumber), " +
+                                    "emplId INT, " +
+                                    "CourseId CHAR(12), " +
+                                    "SectionNumber VARCHAR(10), " +
                                     "Year INT, " +
                                     "Semester CHAR(8), " +
-                                    "Grade CHAR CHECK(Grade = 'A' OR Grade = 'B' OR Grade = 'C' OR Grade = 'D' OR Grade = 'W'), "+
+                                    "Grade CHAR(1) CHECK (Grade = 'A' OR Grade = 'B' OR Grade = 'C' OR Grade = 'D' OR Grade = 'W'), " +
                                     "PRIMARY KEY(EmplId, courseId, SectionNumber))";
     
     String ddlCreateTableAggregateGrades = "CREATE TABLE AggregateGrades(Grade CHAR, NumberOfStudents INT)";
@@ -67,16 +67,17 @@ interface StudentDatabaseInterface {
                                    "(0029, 'Student-29', 'U', NULL), " +
                                    "(0030, 'Student-30', 'F', NULL)";
     
-    String ddlInsertTableClasses = "INSERT INTO Classes VALUES (1, '22100 F', '32131' ,'2021', 'Spring', 'A'), " +
-                                   "(15, '22100 P', '32132', '2021', 'Spring', 'A'), " +
-                                   "(3, '22100 R', '32150', '2021', 'Spring', 'B'), " +
-                                   "(5, '22100 F', '32131', '2021', 'Spring', 'C'), " +
-                                   "(3, '22100 R', '32150', '2021', 'Spring', 'C'), " +
-                                   "(10, '22100 R', '32150', '2021', 'Spring', 'C'), " +
-                                   "(13, '22100 P', '32132', '2021', 'Spring', 'A'), " +
-                                   "(45, '22100 P', '32132', '2021', 'Spring', 'A'), " +
-                                   "(33, '22100 R', '32150', '2021', 'Spring', 'C'), " +
-                                   "(11, '22100 P', '32132', '2021', 'Spring', 'D'), ";
+    String ddlInsertTableClasses = "INSERT INTO Classes VALUES " + 
+                                   "(001, '22100 F', '32131', 2021, 'Spring', 'A'), " +
+                                   "(002, '22100 P', '32132', 2021, 'Spring', 'A'), " +
+                                   "(003, '22100 R', '32150', 2021, 'Spring', 'B'), " +
+                                   "(004, '22100 F', '32131', 2021, 'Spring', 'C'), " +
+                                   "(005, '22100 R', '32150', 2021, 'Spring', 'C'), " +
+                                   "(006, '22100 R', '32150', 2021, 'Spring', 'C'), " +
+                                   "(007, '22100 P', '32132', 2021, 'Spring', 'A'), " +
+                                   "(008, '22100 P', '32132', 2021, 'Spring', 'A'), " +
+                                   "(009, '22100 R', '32150', 2021, 'Spring', 'C'), " +
+                                   "(010, '22100 P', '32132', 2021, 'Spring', 'D'), ";
     
     String sqlAggregateGrades = "SELECT Grade, count(Grade) FROM Classes GROUP BY Grade";
 
@@ -107,11 +108,24 @@ interface StudentDatabaseInterface {
                "FROM " + nameFromTable;
     }
 
+    static String ddlInsertTableClasses(String tableName){
+
+        String tableSchedule = "Sample.Schedule";
+        String tableStudents = "Sample.Students";
+
+        return "INSERT INTO " + tableName + 
+               " (emplId, CourseId, SectionNumber, Year, Semester) " +
+               "SELECT EmplId, CourseId, SectionNumber, Year, Semester FROM " + tableStudents + ", " + tableSchedule +
+               " where courseId = '22000 C'";
+
+
+               //update yourTableName set yourColumnName = yourValue;
+    }
     static String ddlInsertTableAggregateGrades(String nameToTable, String nameFromTable){
 
         return "INSERT INTO " + nameToTable +
-               "SELECT Grade, count(Grade) FROM " + 
-               "Group BY Grade ORDER BY Grade";
+               " SELECT Grade, count(Grade) FROM " + nameFromTable +
+               " Group BY Grade ORDER BY Grade";
     }
 
 }
