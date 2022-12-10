@@ -42,20 +42,16 @@ public class classTest {
         // Creates and insert values into the Classes table
         tableName = "Classes";
         ddlCreateTable = StudentDatabaseInterface.ddlCreateTableClasses;
-
         StudentDatabase.Classes classes = DB.new Classes(ddlCreateTable, tableName);
 
-        // String ddlpopulate = StudentDatabaseInterface.ddlInsertTableClasses(tableName);
-        // System.out.println(ddlpopulate);
+        // Creates and insert values into the AggregateGrades table
+        fromTable = tableName;
+        tableName = "AggregateGrades";
+        ddlCreateTable = StudentDatabaseInterface.ddlCreateTableAggregateGrades;
+        StudentDatabase.AggregateGrades grades = DB.new AggregateGrades(ddlCreateTable, tableName, fromTable);
+
+        // Creates and insert values into the CourseInfo table
+
     }
 
-    // public Character getGrade(){
-        
-    //     Character [] grades = {'A', 'B', 'C', 'D', 'W'};
-
-    //     Random rand = new Random();
-    //     int randomNumber = rand.nextInt(grades.length - 1);
-
-    //     return grades[randomNumber];
-    // }
 } //end of classTest
