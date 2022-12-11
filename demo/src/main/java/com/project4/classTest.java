@@ -1,18 +1,13 @@
 package com.project4;
 
-// import java.sql.Statement;
-import java.io.IOException;
-// import java.sql.Connection;
-// import java.sql.DriverManager;
 import java.sql.SQLException;
-// import java.sql.ResultSet;
 import java.util.Map;
 
 
 
 public class classTest {
 
-    public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
         String url = "jdbc:mysql://localhost:3306/Sample?allowLoadLocalInfile=true";
         String username = "root";
@@ -57,13 +52,6 @@ public class classTest {
 
         Map <Character, Integer> finalGrades = grades.getGrades(tableName);
         System.out.println(finalGrades);
-
-        HistogramAlphaBet histogram = new HistogramAlphaBet(finalGrades);
-
-        HistogramAlphaBet.MyPieChart pie = histogram.new MyPieChart(5, new MyPoint(650, 500, null), 300, 0);
-        
-        System.out.println("Probability : " + histogram.getProbability());
-        System.out.println("\n\nslices : " + pie.getMyPieChart());
     }
 
 } //end of classTest

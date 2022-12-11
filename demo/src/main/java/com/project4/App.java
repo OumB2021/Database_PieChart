@@ -75,17 +75,14 @@ public class App extends Application {
             tableName = "AggregateGrades";
             ddlCreateTable = StudentDatabaseInterface.ddlCreateTableAggregateGrades;
             StudentDatabase.AggregateGrades grades = DB.new AggregateGrades(ddlCreateTable, tableName, fromTable);
-            
-            // Update grade of student #10
-            classes.UpdateGrade(10, 'A');
+
 
             Map <Character, Integer> finalGrades = grades.getGrades(tableName);
-            System.out.println(finalGrades);
             //----------------------------------------------------------------------------------------------------
             //Objects
-            MyPoint p = new MyPoint(650, 500, null);
+            MyPoint p = new MyPoint(500, 370, null);
             HistogramAlphaBet histogram = new HistogramAlphaBet(finalGrades);
-            HistogramAlphaBet.MyPieChart pie = histogram.new MyPieChart(userInput, p, 300, 0);
+            HistogramAlphaBet.MyPieChart pie = histogram.new MyPieChart(userInput, p, 310, 0);
             pie.draw(graphicContext);
             PS.show();
         }

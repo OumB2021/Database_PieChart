@@ -10,6 +10,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 public class HistogramAlphaBet {
     
@@ -165,16 +166,17 @@ public class HistogramAlphaBet {
             MyRectangle legendRec;
             double recSize = 20;
             double fontSize = 20;
-            MyPoint rectPoint = new MyPoint(70, 100, null);
-            double yValueOfTxt = rectPoint.getYCoordinate();
-            double yDisplacementOfShape;
+            MyPoint rectPoint = new MyPoint(70, 820, null);
+            double yCoordinateOfText = rectPoint.getYCoordinate();
+            double xDisplacementOfShape;
 
             //set title of legend canvas
             GC.setFont(new Font(null, 27));
-            GC.strokeText("MyPieChart legend: ", yValueOfTxt-32, yValueOfTxt-30);
-            GC.fillText("MyPieChart legend: ", yValueOfTxt-32, yValueOfTxt-30);
+            GC.setTextAlign(TextAlignment.CENTER);
+            GC.strokeText("M Y    P I E    C H A R T    L E G E N D ", 500, 780);
+            GC.fillText("M Y    P I E    C H A R T    L E G E N D ", 500, 780);
 
-            for (Character key : probability.keySet()){
+            for (Character key : probability.keySet()){ 
 
                 // In case user doesn't want to display any slice
                 if (index == 0)
@@ -191,12 +193,12 @@ public class HistogramAlphaBet {
 
                     legendRec = new MyRectangle(recSize, recSize, rectPoint, slices.get(key).color);
                     legendRec.draw(GC);
-                    yDisplacementOfShape = rectPoint.getYCoordinate() + 30;
-                    yValueOfTxt = rectPoint.getYCoordinate() + 15;
+                    xDisplacementOfShape = rectPoint.getXCoordinate() + 170;
+                    yCoordinateOfText = rectPoint.getYCoordinate() + 15;
                     GC.setFont(new Font(null, fontSize));
                     GC.setStroke(color.getJavaFXColor());
-                    GC.strokeText(("Grade " + key.toString() + ": " + slices.get(key).getInfo() + " %"), rectPoint.getXCoordinate() + 30, yValueOfTxt + 3);
-                    rectPoint = new MyPoint(70, yDisplacementOfShape, null);
+                    GC.strokeText(("Grade " + key.toString() + ": " + slices.get(key).getInfo()), rectPoint.getXCoordinate() + 83, yCoordinateOfText + 3);
+                    rectPoint = new MyPoint(xDisplacementOfShape + 5, 820, null);
                     index++;
                     
                 }
