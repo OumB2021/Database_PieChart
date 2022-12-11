@@ -51,11 +51,19 @@ public class classTest {
         tableName = "AggregateGrades";
         ddlCreateTable = StudentDatabaseInterface.ddlCreateTableAggregateGrades;
         StudentDatabase.AggregateGrades grades = DB.new AggregateGrades(ddlCreateTable, tableName, fromTable);
+        
+        // Update grade of student #10
         classes.UpdateGrade(10, 'A');
 
         Map <Character, Integer> finalGrades = grades.getGrades(tableName);
         System.out.println(finalGrades);
 
+        HistogramAlphaBet histogram = new HistogramAlphaBet(finalGrades);
+
+        HistogramAlphaBet.MyPieChart pie = histogram.new MyPieChart(5, new MyPoint(650, 500, null), 300, 0);
+        
+        System.out.println("Probability : " + histogram.getProbability());
+        System.out.println("\n\nslices : " + pie.getMyPieChart());
     }
 
 } //end of classTest

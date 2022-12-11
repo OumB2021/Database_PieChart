@@ -51,15 +51,16 @@ public class HistogramAlphaBet {
         }
     }
 
-     // copy constructor
-     HistogramAlphaBet(Map<Character, Integer> map){
-        frequency.putAll(map);        
+    // copy constructor
+    HistogramAlphaBet(Map<Character, Integer> map){
+        frequency.putAll(map);      
     }
     //set the filename
     public void setFileName(String fileName){this.fileName = fileName;}
 
     //Getters
     public Map<Character,Integer> getFrequency(){return frequency;}
+
     public Integer getCumulativeFrequency(){return frequency.values().stream().reduce(0, Integer::sum);}
 
     public Map<Character, Integer> sortUpFrequency(){
@@ -86,7 +87,6 @@ public class HistogramAlphaBet {
 
         return probability.entrySet()
                           .stream()
-                          .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
                           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
     }
 
@@ -142,7 +142,7 @@ public class HistogramAlphaBet {
             for (Character key : probability.keySet()){
                 double angle = 360.0 * probability.get(key);
                 slices.put(key, new Slice(center, radius, startAngle, angle, colors[rand.nextInt(colors.length)],
-                String.format("%.4f ", probability.get(key))));
+                String.format("%.2f", probability.get(key))));
                 startAngle += angle;
             }
 
@@ -152,14 +152,13 @@ public class HistogramAlphaBet {
         public void draw(GraphicsContext GC){
 
             // Slices requirements
-            Map<Character, Integer> sortedFrequency = sortDownFrequency();
             int index = 0;
             double slicesInitialAngle = 0;
             double slicesRotationAngle = 0;
             double remainingCharAngle = 0;
             double sumOfProb = 0;
-            MyPoint point = slices.get('a').getCenterPoint();
-            int radius = slices.get('a').getRadius();
+            MyPoint point = slices.get('A').getCenterPoint();
+            int radius = slices.get('A').getRadius();
             MyColor color = MyColor.BLACK; //will be used for the text
 
             // Get the color code for the legend
@@ -175,7 +174,7 @@ public class HistogramAlphaBet {
             GC.strokeText("MyPieChart legend: ", yValueOfTxt-32, yValueOfTxt-30);
             GC.fillText("MyPieChart legend: ", yValueOfTxt-32, yValueOfTxt-30);
 
-            for (Character key : sortedFrequency.keySet()){
+            for (Character key : probability.keySet()){
 
                 // In case user doesn't want to display any slice
                 if (index == 0)
@@ -196,30 +195,30 @@ public class HistogramAlphaBet {
                     yValueOfTxt = rectPoint.getYCoordinate() + 15;
                     GC.setFont(new Font(null, fontSize));
                     GC.setStroke(color.getJavaFXColor());
-                    GC.strokeText(("Letter " + key.toString() + ": " + slices.get(key).getInfo()), rectPoint.getXCoordinate() + 30, yValueOfTxt + 3);
+                    GC.strokeText(("Grade " + key.toString() + ": " + slices.get(key).getInfo() + " %"), rectPoint.getXCoordinate() + 30, yValueOfTxt + 3);
                     rectPoint = new MyPoint(70, yDisplacementOfShape, null);
                     index++;
                     
                 }
 
                 //Draw the rest of the pie chart
-                if ((index == number - 1 && index != 26) || index == 1){
+                if ((index == number - 1 && index != 5) || index == 1){
                     remainingCharAngle = slicesInitialAngle + slicesRotationAngle;
                     new Slice(point, radius, remainingCharAngle, 360 - remainingCharAngle, MyColor.GRAY, Double.toString(1 - sumOfProb)).draw(GC);
                 }
                 
             }
 
-            // Get the probability for the rest of the letters
-            if (index <= 26 || index == 0){
-                legendRec = new MyRectangle(recSize, recSize, rectPoint, MyColor.GRAY);
-                    legendRec.draw(GC);
-                    yDisplacementOfShape = rectPoint.getYCoordinate() + 30;
-                    yValueOfTxt = rectPoint.getYCoordinate() + 15;
-                    GC.setFont(new Font(null, fontSize));
-                    GC.setStroke(color.getJavaFXColor());
-                    GC.strokeText("All other letters: " + String.format("%.4f", 1 - sumOfProb), rectPoint.getXCoordinate() + 30, yValueOfTxt + 3);
-            }
+            // // Get the probability for the rest of the letters
+            // if (index <= 26 || index == 0){
+            //     legendRec = new MyRectangle(recSize, recSize, rectPoint, MyColor.GRAY);
+            //         legendRec.draw(GC);
+            //         yDisplacementOfShape = rectPoint.getYCoordinate() + 30;
+            //         yValueOfTxt = rectPoint.getYCoordinate() + 15;
+            //         GC.setFont(new Font(null, fontSize));
+            //         GC.setStroke(color.getJavaFXColor());
+            //         GC.strokeText("All other letters: " + String.format("%.4f", 1 - sumOfProb), rectPoint.getXCoordinate() + 30, yValueOfTxt + 3);
+            // }
 
         }
     }

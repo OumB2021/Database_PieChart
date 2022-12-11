@@ -6,6 +6,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import java.io.IOException;
+import java.util.Map;
+
 import javax.swing.JOptionPane;
  
  
@@ -35,11 +37,54 @@ public class App extends Application {
                 input = JOptionPane.showInputDialog("Enter a number from 0 to 5");
                 userInput = Integer.parseInt(input);
             }
-           
+            //----------------------------------------------------------------------------------------------------
+            String url = "jdbc:mysql://localhost:3306/Sample?allowLoadLocalInfile=true";
+            String username = "root";
+            String password = "Jkjkjk94+";
+            
+            // Establish connection
+            StudentDatabase DB = new StudentDatabase(url, username, password);
+
+            // Creates variables
+            String ddlCreateTable, tableName, filename, fromTable;
+
+            // Creates and insert values into the schedule table
+            filename = "C:/Users/baarr/OneDrive/Bureau/Java/Project 4/demo/ScheduleSpring2022.txt";
+            tableName = "Schedule";
+            ddlCreateTable = StudentDatabaseInterface.ddlCreateTableSchedule;
+            StudentDatabase.Schedule schedule = DB.new Schedule(ddlCreateTable, filename, tableName);
+
+            // Creates and insert values into the courses table
+            fromTable = "Schedule";
+            tableName = "Courses";
+            ddlCreateTable = StudentDatabaseInterface.ddlCreateTableCourses;
+            StudentDatabase.Courses courses = DB.new Courses(ddlCreateTable, tableName, fromTable);
+
+            // Creates and insert values into the Students table
+            tableName = "Students";
+            ddlCreateTable = StudentDatabaseInterface.ddlCreateTableStudents;
+            StudentDatabase.Students student = DB.new Students(ddlCreateTable, tableName);
+            
+            // Creates and insert values into the Classes table
+            tableName = "Classes";
+            ddlCreateTable = StudentDatabaseInterface.ddlCreateTableClasses;
+            StudentDatabase.Classes classes = DB.new Classes(ddlCreateTable, tableName);
+
+            // Creates and insert values into the AggregateGrades table
+            fromTable = tableName;
+            tableName = "AggregateGrades";
+            ddlCreateTable = StudentDatabaseInterface.ddlCreateTableAggregateGrades;
+            StudentDatabase.AggregateGrades grades = DB.new AggregateGrades(ddlCreateTable, tableName, fromTable);
+            
+            // Update grade of student #10
+            classes.UpdateGrade(10, 'A');
+
+            Map <Character, Integer> finalGrades = grades.getGrades(tableName);
+            System.out.println(finalGrades);
+            //----------------------------------------------------------------------------------------------------
             //Objects
             MyPoint p = new MyPoint(650, 500, null);
-            String filename = "War_and_Peace.txt";
-            HistogramAlphaBet histogram = new HistogramAlphaBet(filename);
+            HistogramAlphaBet histogram = new HistogramAlphaBet(finalGrades);
             HistogramAlphaBet.MyPieChart pie = histogram.new MyPieChart(userInput, p, 300, 0);
             pie.draw(graphicContext);
             PS.show();
