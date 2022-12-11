@@ -6,12 +6,14 @@ import java.io.IOException;
 // import java.sql.DriverManager;
 import java.sql.SQLException;
 // import java.sql.ResultSet;
+import java.util.Map;
 
 
 
 public class classTest {
 
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
+
         String url = "jdbc:mysql://localhost:3306/Sample?allowLoadLocalInfile=true";
         String username = "root";
         String password = "Jkjkjk94+";
@@ -49,8 +51,10 @@ public class classTest {
         tableName = "AggregateGrades";
         ddlCreateTable = StudentDatabaseInterface.ddlCreateTableAggregateGrades;
         StudentDatabase.AggregateGrades grades = DB.new AggregateGrades(ddlCreateTable, tableName, fromTable);
+        classes.UpdateGrade(10, 'A');
 
-        // Creates and insert values into the CourseInfo table
+        Map <Character, Integer> finalGrades = grades.getGrades(tableName);
+        System.out.println(finalGrades);
 
     }
 

@@ -24,15 +24,15 @@ public class App extends Application {
             Pane P = new Pane();
             P.getChildren().add(canvas);
             Scene newScene = new Scene(P, (MyColor.CORNSILK).getJavaFXColor());
-            PS.setTitle("Project3");
+            PS.setTitle("Project4");
             PS.setScene(newScene);
            
             String input = JOptionPane.showInputDialog("How many slices would you like to display?");
             int userInput = Integer.parseInt(input);
  
             //Input validation
-            while (!(userInput >= 0 && userInput <=26)){
-                input = JOptionPane.showInputDialog("Enter a number from 0 to 26");
+            while (!(userInput >= 0 && userInput <=5)){
+                input = JOptionPane.showInputDialog("Enter a number from 0 to 5");
                 userInput = Integer.parseInt(input);
             }
            

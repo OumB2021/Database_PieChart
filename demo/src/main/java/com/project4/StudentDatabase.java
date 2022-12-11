@@ -197,9 +197,15 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
             Character [] grades = {'A', 'B', 'C', 'D', 'W'};
     
             Random rand = new Random();
-            int randomNumber = rand.nextInt(grades.length - 1);
+            int randomNumber = rand.nextInt(grades.length);
     
             return grades[randomNumber];
+        }
+
+        // Update the grades of a student in the class
+        public void UpdateGrade (int studentId, Character grade) throws SQLException {
+            String update = "UPDATE " + nameTable + " SET Grade = '" + grade + "' WHERE EmplId = " + Integer.toString(studentId);
+            TableInterface.updateField(connection, update);
         }
 
         public ResultSet getResultSet() throws SQLException{return this.resultSet;}

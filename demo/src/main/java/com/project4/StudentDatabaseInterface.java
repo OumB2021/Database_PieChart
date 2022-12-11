@@ -121,6 +121,7 @@ interface StudentDatabaseInterface {
 
                //update yourTableName set yourColumnName = yourValue;
     }
+    
     static String ddlInsertTableAggregateGrades(String nameToTable, String nameFromTable){
 
         return "INSERT INTO " + nameToTable +
