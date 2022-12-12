@@ -103,9 +103,6 @@ interface StudentDatabaseInterface {
                " (emplId, CourseId, SectionNumber, Year, Semester) " +
                "SELECT EmplId, CourseId, SectionNumber, Year, Semester FROM " + tableStudents + ", " + tableSchedule +
                " where courseId = '22000 C'";
-
-
-               //update yourTableName set yourColumnName = yourValue;
     }
     
     static String ddlInsertTableAggregateGrades(String nameToTable, String nameFromTable){

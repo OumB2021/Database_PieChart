@@ -244,6 +244,7 @@ public class StudentDatabase implements TableInterface, StudentDatabaseInterface
 
             try {
                 ResultSet resultSet = TableInterface.getTable(connection, nameTable);
+                
                 while (resultSet.next()){
                     grades.put(resultSet.getString("grade").charAt(0),
                     resultSet.getInt("NumberOfStudents"));

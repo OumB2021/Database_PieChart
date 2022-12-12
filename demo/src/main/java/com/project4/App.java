@@ -78,6 +78,7 @@ public class App extends Application {
 
 
             Map <Character, Integer> finalGrades = grades.getGrades(tableName);
+            
             //----------------------------------------------------------------------------------------------------
             //Objects
             MyPoint p = new MyPoint(500, 370, null);

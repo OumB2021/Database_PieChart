@@ -1,9 +1,8 @@
 package com.project4;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
-
-
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
 public class classTest {
 
@@ -18,6 +17,9 @@ public class classTest {
 
         // Creates variables
         String ddlCreateTable, tableName, filename, fromTable;
+        ResultSet resultSet;
+
+        // Create table
 
         // Creates and insert values into the schedule table
         filename = "C:/Users/baarr/OneDrive/Bureau/Java/Project 4/demo/ScheduleSpring2022.txt";
@@ -36,10 +38,16 @@ public class classTest {
         ddlCreateTable = StudentDatabaseInterface.ddlCreateTableStudents;
         StudentDatabase.Students student = DB.new Students(ddlCreateTable, tableName);
         
+        resultSet = student.getResultSet();
+        printTable(resultSet);
+
         // Creates and insert values into the Classes table
         tableName = "Classes";
         ddlCreateTable = StudentDatabaseInterface.ddlCreateTableClasses;
         StudentDatabase.Classes classes = DB.new Classes(ddlCreateTable, tableName);
+
+        resultSet = student.getResultSet();
+        printTable(resultSet);
 
         // Creates and insert values into the AggregateGrades table
         fromTable = tableName;
@@ -47,11 +55,27 @@ public class classTest {
         ddlCreateTable = StudentDatabaseInterface.ddlCreateTableAggregateGrades;
         StudentDatabase.AggregateGrades grades = DB.new AggregateGrades(ddlCreateTable, tableName, fromTable);
         
+        resultSet = grades.getResultSet();
+        printTable(resultSet);
+
         // Update grade of student #10
         classes.UpdateGrade(10, 'A');
 
-        Map <Character, Integer> finalGrades = grades.getGrades(tableName);
-        System.out.println(finalGrades);
+
+    }
+
+    static void printTable(ResultSet rs) throws SQLException {
+        ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+        int columnsNumber = rsmd.getColumnCount();
+        while (rs.next()) {
+            for (int i = 1; i <= columnsNumber; i++) {
+                if (i > 1) System.out.print(",  ");
+                String columnValue = rs.getString(i);
+                System.out.print(columnValue + " " + rsmd.getColumnName(i));
+            }
+            
+            System.out.println("");
+        }
     }
 
 } //end of classTest
