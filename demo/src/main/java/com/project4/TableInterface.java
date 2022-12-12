@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 
 interface TableInterface {
     
-    Connection getConnection(String url, String username, String password);
+    //Connection getConnection(String url, String username, String password);
     
     // Creates a new database 
     static void createSchema(Connection connection, String schemaName) throws SQLException{
@@ -63,17 +63,6 @@ interface TableInterface {
         try {
             populateTable.executeUpdate();
         } catch (Exception e) { System.out.println(e);}
-    }
-
-    //insert into Table from SELECT given specific fields and conditions
-    static void insertFromSelect(Connection connection, String nameToTable, String nameFromTable)  throws SQLException{
-
-        PreparedStatement psInsertFromSelect = connection.prepareStatement("INSERT INTO " + nameToTable + "SELECT * FROM " + nameFromTable);
-        try{
-            psInsertFromSelect.executeUpdate();
-        }
-
-        catch(SQLException e) { System.out.println(e);}
     }
 
     //insert into Table from SELECT given specific fields and conditions

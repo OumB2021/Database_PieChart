@@ -171,7 +171,7 @@ public class HistogramAlphaBet {
             double xDisplacementOfShape;
 
             //set title of legend canvas
-            GC.setFont(new Font(null, 27));
+            GC.setFont(new Font("Roboto", 27));
             GC.setTextAlign(TextAlignment.CENTER);
             GC.strokeText("M Y    P I E    C H A R T    L E G E N D ", 500, 780);
             GC.fillText("M Y    P I E    C H A R T    L E G E N D ", 500, 780);
@@ -197,6 +197,7 @@ public class HistogramAlphaBet {
                     yCoordinateOfText = rectPoint.getYCoordinate() + 15;
                     GC.setFont(new Font(null, fontSize));
                     GC.setStroke(color.getJavaFXColor());
+                    GC.setFill(color.getJavaFXColor());
                     GC.strokeText(("Grade " + key.toString() + ": " + slices.get(key).getInfo()), rectPoint.getXCoordinate() + 83, yCoordinateOfText + 3);
                     rectPoint = new MyPoint(xDisplacementOfShape + 5, 820, null);
                     index++;
@@ -211,16 +212,16 @@ public class HistogramAlphaBet {
                 
             }
 
-            // // Get the probability for the rest of the letters
-            // if (index <= 26 || index == 0){
-            //     legendRec = new MyRectangle(recSize, recSize, rectPoint, MyColor.GRAY);
-            //         legendRec.draw(GC);
-            //         yDisplacementOfShape = rectPoint.getYCoordinate() + 30;
-            //         yValueOfTxt = rectPoint.getYCoordinate() + 15;
-            //         GC.setFont(new Font(null, fontSize));
-            //         GC.setStroke(color.getJavaFXColor());
-            //         GC.strokeText("All other letters: " + String.format("%.4f", 1 - sumOfProb), rectPoint.getXCoordinate() + 30, yValueOfTxt + 3);
-            // }
+            // Get the probability for the rest of the grades
+            if (index < 5 || index == 0){
+                legendRec = new MyRectangle(recSize, recSize, rectPoint, MyColor.GRAY);
+                    legendRec.draw(GC);
+                    xDisplacementOfShape = rectPoint.getYCoordinate() + 30;
+                    yCoordinateOfText = rectPoint.getYCoordinate() + 15;
+                    GC.setFont(new Font(null, fontSize));
+                    GC.setStroke(color.getJavaFXColor());
+                    GC.strokeText("Other grades: " + String.format("%.2f", 1 - sumOfProb), rectPoint.getXCoordinate() + 120, yCoordinateOfText + 3);
+            }
 
         }
     }

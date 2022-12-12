@@ -67,21 +67,7 @@ interface StudentDatabaseInterface {
                                    "(0029, 'Student-29', 'U', NULL), " +
                                    "(0030, 'Student-30', 'F', NULL)";
     
-    String ddlInsertTableClasses = "INSERT INTO Classes VALUES " + 
-                                   "(001, '22100 F', '32131', 2021, 'Spring', 'A'), " +
-                                   "(002, '22100 P', '32132', 2021, 'Spring', 'A'), " +
-                                   "(003, '22100 R', '32150', 2021, 'Spring', 'B'), " +
-                                   "(004, '22100 F', '32131', 2021, 'Spring', 'C'), " +
-                                   "(005, '22100 R', '32150', 2021, 'Spring', 'C'), " +
-                                   "(006, '22100 R', '32150', 2021, 'Spring', 'C'), " +
-                                   "(007, '22100 P', '32132', 2021, 'Spring', 'A'), " +
-                                   "(008, '22100 P', '32132', 2021, 'Spring', 'A'), " +
-                                   "(009, '22100 R', '32150', 2021, 'Spring', 'C'), " +
-                                   "(010, '22100 P', '32132', 2021, 'Spring', 'D'), ";
-    
     String sqlAggregateGrades = "SELECT Grade, count(Grade) FROM Classes GROUP BY Grade";
-
-    // Static methods
 
     // Updat the name of the professor for a specific class
     static String ddlUpdateCourseInstructor (String CourseId, String sectionNumber, String profName){
